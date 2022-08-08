@@ -13,6 +13,7 @@ namespace LanconWeatherAPI.Models
         public string Name { get; set; }
 
         // Foreign Key
+        [Required]
         public int CountryId { get; set; }
     }
 }
