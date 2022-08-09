@@ -22,15 +22,16 @@ namespace LancomWeatherInfoAPI.Controllers
         }
 
         // GET: weatherinfo/<CityController>
-        [HttpGet(Name = "GetCities")]
+        [HttpGet("ListCities")]
         public async Task<IEnumerable<City>> GetCities()
         {
-            var cities = await _weatherInfoContext.Cities.ToListAsync();
+            IEnumerable<City> cities = await _weatherInfoContext.Cities.ToListAsync();
+            cities = cities.OrderBy(c => c.Name);
             return cities;
         }
 
         // POST weatherinfo/<CityController>
-        [HttpPost]
+        [HttpPost("CreateCity")]
         public async Task<ActionResult<string>> CreateCity(string cityName, string countryName)
         {
             IEnumerable<City> currentCities;
@@ -72,6 +73,18 @@ namespace LancomWeatherInfoAPI.Controllers
             }
             return null;
         }
+
+        [HttpDelete("DeleteCities")]
+        public async Task<City> DeleteCities()
+        {
+            IEnumerable<City> cities = await _weatherInfoContext.Cities.ToListAsync();
+            _weatherInfoContext.Cities.RemoveRange(cities);
+            await _weatherInfoContext.SaveChangesAsync();
+            return null;
+
+        }
+
+
         private async Task<int> GetCountryId(string name)
         {
             CountryController countryControll = new CountryController(_weatherInfoContext);
