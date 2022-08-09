@@ -20,7 +20,7 @@ namespace LancomWeatherInfoAPI.Controllers
             _weatherInfoContext = weatherInfoContext;
         }
 
-        // GET: weatherinfo/<ValuesController>
+        // GET: weatherinfo/<CountryController>
         [HttpGet(Name = "GetCountries")]
         public async Task<IEnumerable<Country>> GetCountries()
         {
